@@ -1,0 +1,30 @@
+package {{ .Name }}
+
+import (
+	"github.com/stefanm8/zyla/core"
+)
+
+type {{ .Model.BucketName | Title }} struct {
+	{{ range $_, $field := .Model.Fields }}{{ $field.Name | Title }} {{ $field.Type }} `json:"{{ $field.Name }}" storm:"{{ $field.Options }}"`
+	{{ end }}
+}
+
+func (m {{ .Model.BucketName | Title }}) Get(field string, value interface{}, ctx *core.Context) {
+	err := ctx.DB.One(field, value, m)
+	if err != nil {
+		ctx.Operation.Fail(err)
+	}
+}
+
+
+func (m *{{ .Model.BucketName | Title }}) Update() {
+	
+}
+
+func (m *{{ .Model.BucketName | Title }}) All() {
+	
+}
+
+func (m *{{ .Model.BucketName | Title }}) Delete() {
+	
+}

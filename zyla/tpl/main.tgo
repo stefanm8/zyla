@@ -1,0 +1,23 @@
+package main
+
+import (
+
+	{{ range $_, $app := .Applications }}
+	"./applications/{{ $app.Name }}"
+	{{ end }}
+	"github.com/stefanm8/zyla/cli"
+	"github.com/stefanm8/zyla/core"
+	
+)
+
+func main() {
+	helper := cli.RunFromCLI()
+
+	{{ range $_, $app := .Applications }}
+	helper.Initializer.Router.HandleFunc("{{ $app.Route }}", core.NewView(&{{ $app.Name }}.View{}).Dispatch())
+	{{ end }}
+	v := core.NewView(&blog.View{})
+
+	helper.Initializer.Router.HandleFunc("/api/blog", v.Dispatch())
+	helper.Handle()
+}

@@ -1,0 +1,33 @@
+package {{ .Name }}
+
+import (
+	"{{ with (index .Dependecies "zyla") }}{{ .Import }}{{ end }}/core"
+)
+
+type View struct {
+	*core.View
+}
+
+func (v *View) GET(ctx *core.Context) {
+	vr := ctx.Request.URL.Query()
+	m := &{{ .Model | Title }}{}
+	identifier := vr.Get("{{ .Model.Identifier }}")
+	if identifier != nil {
+		intID, _ := strconv.Atoi(identifier)
+		m.Get("{{ .Model.Identifier }}", intID, ctx)
+		ctx.Response = core.NewResponse(ctx.Operation, m)
+		return
+	} 
+	m.Get("{{ .Model.Identifier }}", identifier, ctx)
+	ctx.Response = core.NewResponse(ctx.Operation, m)
+	return
+}
+
+func (v *View) PUT(ctx *core.Context) {
+}
+
+func (v *View) POST(ctx *core.Context) {
+}
+
+func (v *View) DELETE(ctx *core.Context) {
+}

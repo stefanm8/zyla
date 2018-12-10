@@ -1,0 +1,19 @@
+name: "TesterGrup"
+github: "stefanm8"
+applications: 
+- name: "blog"
+  route: "api/blog"
+  model: 
+    bucket: "post"
+    fields:
+    - name: "id"
+      type: "int"
+      options: "pk, autoincrement"
+
+    - name: "title"
+      type: "string"
+      # options: ""
+
+    - name: "body"
+      type: "string"
+      # options: ""
